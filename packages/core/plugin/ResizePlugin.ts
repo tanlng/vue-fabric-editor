@@ -6,7 +6,7 @@
  * @Description: 画布resize拖拽插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { throttle } from 'lodash-es';
 import '../styles/resizePlugin.css';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
@@ -201,7 +201,7 @@ class ResizePlugin implements IPluginTempl {
       }
 
       this.editor.setCenterFromObject(workspace);
-      workspace.clone((cloned: fabric.Rect) => {
+      workspace.clone().then((cloned: fabric.Rect) => {
         this.canvas.clipPath = cloned;
         this.canvas.requestRenderAll();
       });

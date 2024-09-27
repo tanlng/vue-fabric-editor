@@ -6,7 +6,7 @@
  * @Description: 组对齐插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
 type IPlugin = Pick<
@@ -162,7 +162,7 @@ class GroupAlignPlugin implements IPluginTempl {
     const { canvas } = this;
     const activeObject = canvas.getActiveObject() as fabric.ActiveSelection;
     // width属性不准确，需要坐标换算
-    function getItemWidth(item: fabric.Object) {
+    function getItemWidth(item: fabric.FabricObject) {
       let x1 = Infinity,
         x2 = -Infinity;
       for (const key in item.aCoords) {
@@ -180,7 +180,7 @@ class GroupAlignPlugin implements IPluginTempl {
     function getAllItemHeight() {
       let count = 0;
       if (activeObject) {
-        activeObject.forEachObject((item: fabric.Object) => {
+        activeObject.forEachObject((item: fabric.FabricObject) => {
           count += getItemWidth(item);
         });
       }
@@ -218,7 +218,7 @@ class GroupAlignPlugin implements IPluginTempl {
       // 组原点高度
       const yHeight = Number(activeObject.width) / 2;
 
-      activeObject.forEachObject((item: fabric.Object, i: number) => {
+      activeObject.forEachObject((item: fabric.FabricObject, i: number) => {
         // 获取当前元素之前所有元素的高度
         const preHeight = getItemLeft(i);
         // 顶部距离 间距 * 索引 + 之前元素高度 - 原点高度
@@ -229,7 +229,7 @@ class GroupAlignPlugin implements IPluginTempl {
 
     const objecs = canvas.getActiveObjects();
     canvas.discardActiveObject();
-    objecs.forEach((item: fabric.Object) => {
+    objecs.forEach((item: fabric.FabricObject) => {
       let x = Infinity;
       for (const key in item.aCoords) {
         if (item.aCoords[key].x < x) {
@@ -253,7 +253,7 @@ class GroupAlignPlugin implements IPluginTempl {
       height: 0,
     };
     // width属性不准确，需要坐标换算
-    function getItemHeight(item: fabric.Object) {
+    function getItemHeight(item: fabric.FabricObject) {
       let y1 = Infinity,
         y2 = -Infinity;
       for (const key in item.aCoords) {
@@ -269,7 +269,7 @@ class GroupAlignPlugin implements IPluginTempl {
     // 获取所有元素高度
     function getAllItemHeight() {
       let count = 0;
-      activeObject.forEachObject((item: fabric.Object) => {
+      activeObject.forEachObject((item: fabric.FabricObject) => {
         count += getItemHeight(item);
       });
       return count;
@@ -301,7 +301,7 @@ class GroupAlignPlugin implements IPluginTempl {
       // 组原点高度
       const yHeight = Number(activeObject.height) / 2;
 
-      activeObject.forEachObject((item: fabric.Object, i: number) => {
+      activeObject.forEachObject((item: fabric.FabricObject, i: number) => {
         // 获取当前元素之前所有元素的高度
         const preHeight = getItemTop(i);
         // 顶部距离 间距 * 索引 + 之前元素高度 - 原点高度

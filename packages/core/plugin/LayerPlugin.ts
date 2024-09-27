@@ -6,7 +6,7 @@
  * @Description: 图层调整插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
 type IPlugin = Pick<LayerPlugin, 'up' | 'down' | 'toFront' | 'toBack'>;

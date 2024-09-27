@@ -38,7 +38,7 @@
 <script setup name="ColorSelector">
 // import 'color-gradient-picker-vue3/dist/style.css';
 // import gradientColorPicker from 'color-gradient-picker-vue3';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import useSelect from '@/hooks/select';
 import { debounce } from 'lodash-es';
 const { canvasEditor } = useSelect();

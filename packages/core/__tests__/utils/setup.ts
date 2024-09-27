@@ -1,5 +1,5 @@
 import Editor from '../../Editor.ts';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
 export function createEditor() {
   const editor = new Editor();

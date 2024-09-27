@@ -6,7 +6,7 @@
  * @Description: 基础元素类型添加
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 import { v4 as uuid } from 'uuid';
 
@@ -26,7 +26,7 @@ export default class AddBaseTypePlugin implements IPluginTempl {
   }
 
   addBaseType(
-    item: fabric.Object,
+    item: fabric.FabricObject,
     optons?: {
       event: DragEvent;
       scale: boolean;
@@ -47,7 +47,7 @@ export default class AddBaseTypePlugin implements IPluginTempl {
     this.canvas.renderAll();
   }
 
-  _toEvent(item: fabric.Object, event: DragEvent) {
+  _toEvent(item: fabric.FabricObject, event: DragEvent) {
     const { left, top } = this.canvas.getSelectionElement().getBoundingClientRect();
     if (event.x < left || event.y < top || item.width === undefined) return;
     const point = {
@@ -61,12 +61,12 @@ export default class AddBaseTypePlugin implements IPluginTempl {
     });
   }
 
-  _toCenter(item: fabric.Object) {
+  _toCenter(item: fabric.FabricObject) {
     this.canvas.setActiveObject(item);
     this.editor.position('center');
   }
 
-  _toScale(item: fabric.Object) {
+  _toScale(item: fabric.FabricObject) {
     const { width } = this.editor.getWorkspase();
     if (width === undefined) return;
     item.scaleToWidth(width / 2);

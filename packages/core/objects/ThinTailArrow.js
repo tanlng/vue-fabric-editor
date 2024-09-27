@@ -5,11 +5,11 @@
  * @LastEditTime: 2024-05-10 22:08:51
  * @Description: 细尾箭头，支持控制条拖拽不变形
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
-fabric.ThinTailArrow = fabric.util.createClass(fabric.Line, {
-  type: 'thinTailArrow',
-  superType: 'drawing',
+class FabricThinTailArrow extends fabric.Line {
+  type = 'thinTailArrow';
+  superType = 'drawing';
   initialize(points, options) {
     if (!points) {
       const { x1, x2, y1, y2 } = options;
@@ -17,7 +17,7 @@ fabric.ThinTailArrow = fabric.util.createClass(fabric.Line, {
     }
     options = options || {};
     this.callSuper('initialize', points, options);
-  },
+  }
   _render(ctx) {
     ctx.save();
     // 乘或除对应的scaleX(Y)，抵消元素放缩造成的影响，使箭头不会变形
@@ -46,12 +46,11 @@ fabric.ThinTailArrow = fabric.util.createClass(fabric.Line, {
     ctx.stroke();
     ctx.fill();
     ctx.restore();
-  },
-});
+  }
+  fromObject = (options, callback) => {
+    const { x1, x2, y1, y2 } = options;
+    return callback(new FabricThinTailArrow([x1, y1, x2, y2], options));
+  };
+}
 
-fabric.ThinTailArrow.fromObject = (options, callback) => {
-  const { x1, x2, y1, y2 } = options;
-  return callback(new fabric.ThinTailArrow([x1, y1, x2, y2], options));
-};
-
-export default fabric.ThinTailArrow;
+export default FabricThinTailArrow;

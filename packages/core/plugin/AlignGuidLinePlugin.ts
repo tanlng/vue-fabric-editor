@@ -5,8 +5,9 @@
  * @LastEditTime: 2024-04-10 17:32:48
  * @Description: 辅助线功能
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { IEditor, IPluginTempl } from '@kuaitu/core';
+import FabricGuideLine from '../ruler/guideline';
 
 declare interface VerticalLine {
   x: number;
@@ -110,8 +111,8 @@ class AlignGuidLinePlugin implements IPluginTempl {
 
         // 排除辅助线
         if (
-          activeObject instanceof fabric.GuideLine &&
-          canvasObjects[i] instanceof fabric.GuideLine
+          activeObject instanceof FabricGuideLine &&
+          canvasObjects[i] instanceof FabricGuideLine
         ) {
           continue;
         }

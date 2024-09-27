@@ -8,7 +8,7 @@
 /**
  * Override the initialize function for the _historyInit();
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
 fabric.Canvas.prototype.initialize = (function (originalFn) {
   return function (...args) {

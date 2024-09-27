@@ -7,7 +7,7 @@
  */
 
 // const repoSrc = 'http://localhost:1337';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import FontFaceObserver from 'fontfaceobserver';
 import axios from 'axios';
 import { downFile } from '../utils/utils';

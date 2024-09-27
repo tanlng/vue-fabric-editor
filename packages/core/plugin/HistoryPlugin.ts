@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-07-12 21:35:16
  * @Description: 历史记录插件
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import '../utils/fabric-history.js';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 

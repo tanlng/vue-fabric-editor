@@ -6,7 +6,7 @@
  * @Description: 居中对齐插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
 type IPlugin = Pick<CenterAlignPlugin, 'centerH' | 'center' | 'position' | 'centerV'>;
@@ -22,19 +22,19 @@ class CenterAlignPlugin implements IPluginTempl {
   // public hotkeys: string[] = ['space'];
   constructor(public canvas: fabric.Canvas, public editor: IEditor) {}
 
-  center(workspace: fabric.Rect, object: fabric.Object) {
+  center(workspace: fabric.Rect, object: fabric.FabricObject) {
     const center = workspace.getCenterPoint();
     return this.canvas._centerObject(object, center);
   }
 
-  centerV(workspace: fabric.Rect, object: fabric.Object) {
+  centerV(workspace: fabric.Rect, object: fabric.FabricObject) {
     return this.canvas._centerObject(
       object,
       new fabric.Point(object.getCenterPoint().x, workspace.getCenterPoint().y)
     );
   }
 
-  centerH(workspace: fabric.Rect, object: fabric.Object) {
+  centerH(workspace: fabric.Rect, object: fabric.FabricObject) {
     return this.canvas._centerObject(
       object,
       new fabric.Point(workspace.getCenterPoint().x, object.getCenterPoint().y)

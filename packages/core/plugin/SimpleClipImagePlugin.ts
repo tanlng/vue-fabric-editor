@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { getPolygonVertices } from '../../../src/utils/math';
 import { get, set } from 'lodash-es';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
@@ -10,7 +10,7 @@ declare module '@kuaitu/core' {
   interface IEditor extends IPlugin {}
 }
 
-const getBounds = (activeObject: fabric.Object) => {
+const getBounds = (activeObject: fabric.FabricObject) => {
   const { left = 0, top = 0 } = activeObject;
   return {
     width: activeObject.getScaledWidth(),
@@ -19,15 +19,15 @@ const getBounds = (activeObject: fabric.Object) => {
     top,
   };
 };
-const bindInfo = (shell: fabric.Object, activeObject: fabric.Object) => {
+const bindInfo = (shell: fabric.FabricObject, activeObject: fabric.FabricObject) => {
   bindFlagToObject(shell);
   bindFlagToObject(shell, 'targetId', get(activeObject, 'id'));
   bindFlagToObject(shell, 'targetType', get(activeObject, 'type'));
 };
-const bindFlagToObject = (activeObject: fabric.Object, key = 'clip', value: any = true) => {
+const bindFlagToObject = (activeObject: fabric.FabricObject, key = 'clip', value: any = true) => {
   set(activeObject, key, value);
 };
-const createRectClip = (activeObject: fabric.Object, inverted: boolean) => {
+const createRectClip = (activeObject: fabric.FabricObject, inverted: boolean) => {
   const { width = 0, height = 0, left = 0, top = 0 } = getBounds(activeObject);
   const clipW = Math.round(width / 2);
   const clipH = Math.round(height / 2);
@@ -53,7 +53,7 @@ const createRectClip = (activeObject: fabric.Object, inverted: boolean) => {
   });
   return { clipPath, shell };
 };
-const createCircleClip = (activeObject: fabric.Object, inverted: boolean) => {
+const createCircleClip = (activeObject: fabric.FabricObject, inverted: boolean) => {
   const point = activeObject.getCenterPoint();
   const { width } = getBounds(activeObject);
   const shell = new fabric.Ellipse({
@@ -78,7 +78,7 @@ const createCircleClip = (activeObject: fabric.Object, inverted: boolean) => {
   });
   return { shell, clipPath };
 };
-const createTriClip = (activeObject: fabric.Object, inverted: boolean) => {
+const createTriClip = (activeObject: fabric.FabricObject, inverted: boolean) => {
   const point = activeObject.getCenterPoint();
   const { width = 0, height = 0 } = getBounds(activeObject);
   const clipW = Math.round(width / 2);
@@ -105,7 +105,7 @@ const createTriClip = (activeObject: fabric.Object, inverted: boolean) => {
   });
   return { shell, clipPath };
 };
-const createPolygonClip = (activeObject: fabric.Object, inverted: boolean) => {
+const createPolygonClip = (activeObject: fabric.FabricObject, inverted: boolean) => {
   const point = activeObject.getCenterPoint();
   const points = getPolygonVertices(5, 200);
   const shell = new fabric.Polygon(points, {
@@ -134,7 +134,7 @@ export default class SimpleClipImagePlugin implements IPluginTempl {
   addClipPathToImage(value: string) {
     const activeObject = this.canvas.getActiveObjects()[0];
     if (activeObject && activeObject.type === 'image') {
-      let clip: { shell: fabric.Object; clipPath: fabric.Object } | null = null;
+      let clip: { shell: fabric.FabricObject; clipPath: fabric.FabricObject } | null = null;
       const [name, inverted] = value.split('-');
       const isInverted = !!inverted;
       switch (name) {
@@ -190,7 +190,11 @@ export default class SimpleClipImagePlugin implements IPluginTempl {
       this.canvas.setActiveObject(shell);
     }
   }
-  correctPosition(activeObject: fabric.Object, shell: fabric.Object, clipPath: fabric.Object) {
+  correctPosition(
+    activeObject: fabric.FabricObject,
+    shell: fabric.FabricObject,
+    clipPath: fabric.FabricObject
+  ) {
     const position = activeObject.toLocalPoint(shell.getCenterPoint(), 'center', 'center');
     const { scaleX = 1, scaleY = 1 } = activeObject;
     clipPath.set({

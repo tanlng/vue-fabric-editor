@@ -6,7 +6,7 @@
  * @Description: 素材插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import axios from 'axios';
 import qs from 'qs';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';

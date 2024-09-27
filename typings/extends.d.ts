@@ -1,3 +1,5 @@
+import FabricGuideLine from '@kuaitu/core';
+
 declare namespace fabric {
   export interface Canvas {
     contextTop: CanvasRenderingContext2D;
@@ -12,8 +14,8 @@ declare namespace fabric {
     _historyNext(): void;
     _historyInit(): void;
     offHistory(): void;
-    _centerObject: (obj: fabric.Object, center: fabric.Point) => fabric.Canvas;
-    _setupCurrentTransform(e: Event, target: fabric.Object, alreadySelected: boolean): void;
+    _centerObject: (obj: fabric.FabricObject, center: fabric.Point) => fabric.Canvas;
+    _setupCurrentTransform(e: Event, target: fabric.FabricObject, alreadySelected: boolean): void;
   }
 
   export interface Control {
@@ -55,8 +57,8 @@ declare namespace fabric {
 
   export interface IUtil {
     findScaleToFit: (
-      source: Record<string, unknown> | fabric.Object,
-      destination: Record<string, unknown> | fabric.Object
+      source: Record<string, unknown> | fabric.FabricObject,
+      destination: Record<string, unknown> | fabric.FabricObject
     ) => number;
   }
 
@@ -69,7 +71,7 @@ declare namespace fabric {
   function ControlStringHandler(
     eventData: MouseEvent,
     control: fabric.Control,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ): string;
   export const controlsUtils: {
     rotationWithSnapping: ControlMouseEventHandler;
@@ -88,9 +90,9 @@ declare namespace fabric {
   export interface IObservable<T> {
     on(
       eventName: 'guideline:moving' | 'guideline:mouseup',
-      handler: (event: { e: Event; target: fabric.GuideLine }) => void
+      handler: (event: { e: Event; target: FabricGuideLine }) => void
     ): T;
-    on(events: { [key: EventName]: (event: { e: Event; target: fabric.GuideLine }) => void }): T;
+    on(events: { [key: EventName]: (event: { e: Event; target: FabricGuideLine }) => void }): T;
   }
 
   export interface IGuideLineOptions extends ILineOptions {
@@ -99,8 +101,8 @@ declare namespace fabric {
 
   export interface IGuideLineClassOptions extends IGuideLineOptions {
     canvas: {
-      setActiveObject(object: fabric.Object | fabric.GuideLine, e?: Event): Canvas;
-      remove<T>(...object: (fabric.Object | fabric.GuideLine)[]): T;
+      setActiveObject(object: fabric.FabricObject | FabricGuideLine, e?: Event): Canvas;
+      remove<T>(...object: (fabric.FabricObject | FabricGuideLine)[]): T;
     } & Canvas;
     activeOn: 'down' | 'up';
     initialize(xy: number, objObjects: IGuideLineOptions): void;
@@ -110,7 +112,7 @@ declare namespace fabric {
     off(eventName: EventNameExt, handler?: (e: IEvent<MouseEvent>) => void): void;
     fire<T>(eventName: EventNameExt, options?: any): T;
     isPointOnRuler(e: MouseEvent): 'horizontal' | 'vertical' | false;
-    bringToFront(): fabric.Object;
+    bringToFront(): fabric.FabricObject;
     isHorizontal(): boolean;
   }
 

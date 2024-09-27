@@ -6,7 +6,7 @@
  * @Description: 组内文字编辑
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { isGroup } from '../utils/utils';
 import { v4 as uuid } from 'uuid';
 import { pick } from 'lodash-es';
@@ -177,7 +177,7 @@ class GroupTextEditorPlugin implements IPluginTempl {
     return ids;
   }
 
-  isText(obj: fabric.Object) {
+  isText(obj: fabric.FabricObject) {
     return obj.type && ['i-text', 'text', 'textbox'].includes(obj.type);
   }
 

@@ -1,5 +1,5 @@
 import type { Rect } from './ruler';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
 /**
  * 计算尺子间距

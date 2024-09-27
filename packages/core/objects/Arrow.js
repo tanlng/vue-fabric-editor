@@ -5,11 +5,11 @@
  * @LastEditTime: 2023-02-08 00:08:40
  * @Description: 箭头元素
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
-fabric.Arrow = fabric.util.createClass(fabric.Line, {
-  type: 'arrow',
-  superType: 'drawing',
+class FabricArrow extends fabric.Line {
+  type = 'arrow';
+  superType = 'drawing';
   initialize(points, options) {
     if (!points) {
       const { x1, x2, y1, y2 } = options;
@@ -17,7 +17,7 @@ fabric.Arrow = fabric.util.createClass(fabric.Line, {
     }
     options = options || {};
     this.callSuper('initialize', points, options);
-  },
+  }
   _render(ctx) {
     this.callSuper('_render', ctx);
     ctx.save();
@@ -40,12 +40,11 @@ fabric.Arrow = fabric.util.createClass(fabric.Line, {
     ctx.stroke();
     ctx.fill();
     ctx.restore();
-  },
-});
+  }
+  fromObject = (options, callback) => {
+    const { x1, x2, y1, y2 } = options;
+    return callback(new FabricArrow([x1, y1, x2, y2], options));
+  };
+}
 
-fabric.Arrow.fromObject = (options, callback) => {
-  const { x1, x2, y1, y2 } = options;
-  return callback(new fabric.Arrow([x1, y1, x2, y2], options));
-};
-
-export default fabric.Arrow;
+export default FabricArrow;

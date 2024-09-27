@@ -231,7 +231,7 @@ import attributeBarcode from '@/components/attributeBarcode.vue';
 import attributeQrCode from '@/components/attributeQrCode.vue';
 
 // 功能组件
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 
 // hooks
 import useSelectListen from '@/hooks/useSelectListen';

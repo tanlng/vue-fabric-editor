@@ -19,8 +19,11 @@ class ControlsRotatePlugin implements IPluginTempl {
   }
   init() {
     const { canvas } = this;
+    if (!fabric.FabricObject.prototype.controls) {
+      fabric.FabricObject.prototype.controls = {};
+    }
     // 添加旋转控制响应区域
-    fabric.Object.prototype.controls.mtr = new fabric.Control({
+    fabric.FabricObject.prototype.controls.mtr = new fabric.Control({
       x: -0.5,
       y: -0.5,
       offsetY: -10,
@@ -31,7 +34,7 @@ class ControlsRotatePlugin implements IPluginTempl {
       render: () => '',
     });
     // ↖左上
-    fabric.Object.prototype.controls.mtr2 = new fabric.Control({
+    fabric.FabricObject.prototype.controls.mtr2 = new fabric.Control({
       x: 0.5,
       y: -0.5,
       offsetY: -10,
@@ -41,7 +44,7 @@ class ControlsRotatePlugin implements IPluginTempl {
       actionHandler: fabric.controlsUtils.rotationWithSnapping,
       render: () => '',
     }); // ↗右上
-    fabric.Object.prototype.controls.mtr3 = new fabric.Control({
+    fabric.FabricObject.prototype.controls.mtr3 = new fabric.Control({
       x: 0.5,
       y: 0.5,
       offsetY: 10,
@@ -51,7 +54,7 @@ class ControlsRotatePlugin implements IPluginTempl {
       actionHandler: fabric.controlsUtils.rotationWithSnapping,
       render: () => '',
     }); // ↘右下
-    fabric.Object.prototype.controls.mtr4 = new fabric.Control({
+    fabric.FabricObject.prototype.controls.mtr4 = new fabric.Control({
       x: -0.5,
       y: 0.5,
       offsetY: 10,
@@ -67,10 +70,10 @@ class ControlsRotatePlugin implements IPluginTempl {
       const activeObj = canvas.getActiveObject();
       const angle = activeObj?.angle?.toFixed(2);
       if (angle !== undefined) {
-        fabric.Object.prototype.controls.mtr.cursorStyle = rotateIcon(Number(angle));
-        fabric.Object.prototype.controls.mtr2.cursorStyle = rotateIcon(Number(angle) + 90);
-        fabric.Object.prototype.controls.mtr3.cursorStyle = rotateIcon(Number(angle) + 180);
-        fabric.Object.prototype.controls.mtr4.cursorStyle = rotateIcon(Number(angle) + 270);
+        fabric.FabricObject.prototype.controls.mtr.cursorStyle = rotateIcon(Number(angle));
+        fabric.FabricObject.prototype.controls.mtr2.cursorStyle = rotateIcon(Number(angle) + 90);
+        fabric.FabricObject.prototype.controls.mtr3.cursorStyle = rotateIcon(Number(angle) + 180);
+        fabric.FabricObject.prototype.controls.mtr4.cursorStyle = rotateIcon(Number(angle) + 270);
       }
     });
 
@@ -105,4 +108,4 @@ class ControlsRotatePlugin implements IPluginTempl {
 
 export default ControlsRotatePlugin;
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';

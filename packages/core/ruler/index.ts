@@ -1,6 +1,7 @@
 import type { Canvas } from 'fabric/fabric-impl';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import CanvasRuler, { RulerOptions } from './ruler';
+import FabricGuideLine from './guideline';
 
 function initRuler(canvas: Canvas, options?: RulerOptions) {
   const ruler = new CanvasRuler({
@@ -9,7 +10,7 @@ function initRuler(canvas: Canvas, options?: RulerOptions) {
   });
 
   // 辅助线移动到画板外删除
-  let workspace: fabric.Object | undefined = undefined;
+  let workspace: fabric.FabricObject | undefined = undefined;
 
   /**
    * 获取workspace
@@ -24,7 +25,7 @@ function initRuler(canvas: Canvas, options?: RulerOptions) {
    * @param target
    * @returns
    */
-  const isRectOut = (object: fabric.Object, target: fabric.GuideLine): boolean => {
+  const isRectOut = (object: fabric.FabricObject, target: FabricGuideLine): boolean => {
     const { top, height, left, width } = object;
 
     if (top === undefined || height === undefined || left === undefined || width === undefined) {

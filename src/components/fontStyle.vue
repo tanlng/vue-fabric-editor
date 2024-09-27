@@ -48,7 +48,7 @@ import useSelect from '@/hooks/select';
 import useCalculate from '@/hooks/useCalculate';
 import { getMaterialInfoUrl, getMaterialPreviewUrl } from '@/hooks/usePageList';
 import { getFontStyleTypes, getFontStyleListByType, getFontStyles } from '@/api/material';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { v4 as uuid } from 'uuid';
 import { Spin } from 'view-ui-plus';
 import { useI18n } from 'vue-i18n';

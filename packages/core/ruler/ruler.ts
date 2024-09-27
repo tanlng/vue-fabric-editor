@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Canvas, Point, IEvent } from 'fabric/fabric-impl';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { getGap, mergeLines, darwRect, darwText, darwLine, drawMask } from './utils';
 import { throttle } from 'lodash-es';
-import { setupGuideLine } from './guideline';
+import FabricGuideLine from './guideline';
 
 /**
  * 配置
@@ -111,7 +111,7 @@ class CanvasRuler {
     selection: undefined,
   };
 
-  private tempGuidelLine: fabric.GuideLine | undefined;
+  private tempGuidelLine: FabricGuideLine | undefined;
 
   constructor(_options: RulerOptions) {
     // 合并默认配置
@@ -129,12 +129,10 @@ class CanvasRuler {
     );
 
     this.ctx = this.options.canvas.getContext();
-
-    fabric.util.object.extend(this.options.canvas, {
-      ruler: this,
-    });
-
-    setupGuideLine();
+    // this.options.canvas.ruler = this;
+    // fabric.util.object.extend(this.options.canvas, {
+    //   ruler: this,
+    // });
 
     if (this.options.enabled) {
       this.enable();
@@ -150,14 +148,14 @@ class CanvasRuler {
    * 移除全部辅助线
    */
   public clearGuideline() {
-    this.options.canvas.remove(...this.options.canvas.getObjects(fabric.GuideLine.prototype.type));
+    this.options.canvas.remove(...this.options.canvas.getObjects(FabricGuideLine.prototype.type));
   }
 
   /**
    * 显示全部辅助线
    */
   public showGuideline() {
-    this.options.canvas.getObjects(fabric.GuideLine.prototype.type).forEach((guideLine) => {
+    this.options.canvas.getObjects(FabricGuideLine.prototype.type).forEach((guideLine) => {
       guideLine.set('visible', true);
     });
     this.options.canvas.renderAll();
@@ -167,7 +165,7 @@ class CanvasRuler {
    * 隐藏全部辅助线
    */
   public hideGuideline() {
-    this.options.canvas.getObjects(fabric.GuideLine.prototype.type).forEach((guideLine) => {
+    this.options.canvas.getObjects(FabricGuideLine.prototype.type).forEach((guideLine) => {
       guideLine.set('visible', false);
     });
     this.options.canvas.renderAll();
@@ -469,7 +467,7 @@ class CanvasRuler {
         const objectOffsetFromCenterY = (group.height / 2 + (obj.top ?? 0)) * (1 - group.scaleY);
         rect.top += (groupCenterY - objectOffsetFromCenterY) * this.getZoom();
       }
-      if (obj instanceof fabric.GuideLine) {
+      if (obj instanceof FabricGuideLine) {
         rect.skip = obj.isHorizontal() ? 'x' : 'y';
       }
       rects.push(rect);
@@ -527,7 +525,7 @@ class CanvasRuler {
       this.options.canvas.selection = false;
       this.activeOn = 'down';
 
-      this.tempGuidelLine = new fabric.GuideLine(
+      this.tempGuidelLine = new FabricGuideLine(
         hoveredRuler === 'horizontal' ? e.absolutePointer.y : e.absolutePointer.x,
         {
           axis: hoveredRuler,
@@ -587,7 +585,7 @@ class CanvasRuler {
       return;
     }
     // const activeObjects = this.options.canvas.getActiveObjects();
-    // if (activeObjects.length === 1 && activeObjects[0] instanceof fabric.GuideLine) {
+    // if (activeObjects.length === 1 && activeObjects[0] instanceof FabricGuideLine) {
     //   return;
     // }
     // 鼠标从外边进入 或 在另一侧标尺

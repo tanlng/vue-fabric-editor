@@ -54,6 +54,7 @@
 <script setup name="Layer">
 import { uniqBy } from 'lodash-es';
 import useSelect from '@/hooks/select';
+import FabricGuideLine from '@kuaitu/core';
 const { canvasEditor, fabric, mixinState } = useSelect();
 
 const list = ref([]);
@@ -140,7 +141,7 @@ const getList = () => {
     ...canvasEditor.canvas.getObjects().filter((item) => {
       // return item;
       // 过滤掉辅助线
-      return !(item instanceof fabric.GuideLine || item.id === 'workspace');
+      return !(item instanceof FabricGuideLine || item.id === 'workspace');
     }),
   ]
     .reverse()

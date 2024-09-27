@@ -6,7 +6,7 @@
  * @Description: 组合拆分组合插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { isGroup, isActiveSelection } from '../utils/utils';
 import { v4 as uuid } from 'uuid';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
@@ -42,7 +42,7 @@ class GroupPlugin implements IPluginTempl {
     if (!activeObj) return;
     const activegroup = activeObj.toGroup();
     const objectsInGroup = activegroup.getObjects();
-    activegroup.clone((newgroup: fabric.Group) => {
+    activegroup.clone().then((newgroup: fabric.Group) => {
       newgroup.set('id', uuid());
       this.canvas.remove(activegroup);
       objectsInGroup.forEach((object) => {

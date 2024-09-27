@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-07-16 14:59:25
  * @Description: 控制条插件
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import verticalImg from '../assets/middlecontrol.svg?url';
 // import verticalImg from './middlecontrol.svg';
 import horizontalImg from '../assets/middlecontrolhoz.svg?url';
@@ -17,7 +17,7 @@ import type { IEditor, IPluginTempl } from '@kuaitu/core';
  * 实际场景: 在进行某个对象缩放的时候，由于fabricjs默认精度使用的是toFixed(2)。
  * 此处为了缩放的精度更准确一些，因此将NUM_FRACTION_DIGITS默认值改为4，即toFixed(4).
  */
-fabric.Object.NUM_FRACTION_DIGITS = 4;
+fabric.FabricObject.NUM_FRACTION_DIGITS = 4;
 
 function drawImg(
   ctx: CanvasRenderingContext2D,
@@ -49,7 +49,7 @@ function intervalControl() {
     left: number,
     top: number,
     styleOverride: any,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ) {
     drawImg(ctx, left, top, verticalImgIcon, 20, 25, fabricObject.angle);
   }
@@ -59,12 +59,15 @@ function intervalControl() {
     left: number,
     top: number,
     styleOverride: any,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ) {
     drawImg(ctx, left, top, horizontalImgIcon, 25, 20, fabricObject.angle);
   }
+  if (!fabric.FabricObject.prototype.controls) {
+    fabric.FabricObject.prototype.controls = {};
+  }
   // 中间横杠
-  fabric.Object.prototype.controls.ml = new fabric.Control({
+  fabric.FabricObject.prototype.controls.ml = new fabric.Control({
     x: -0.5,
     y: 0,
     offsetX: -1,
@@ -74,7 +77,7 @@ function intervalControl() {
     render: renderIcon,
   });
 
-  fabric.Object.prototype.controls.mr = new fabric.Control({
+  fabric.FabricObject.prototype.controls.mr = new fabric.Control({
     x: 0.5,
     y: 0,
     offsetX: 1,
@@ -84,7 +87,7 @@ function intervalControl() {
     render: renderIcon,
   });
 
-  fabric.Object.prototype.controls.mb = new fabric.Control({
+  fabric.FabricObject.prototype.controls.mb = new fabric.Control({
     x: 0,
     y: 0.5,
     offsetY: 1,
@@ -94,7 +97,7 @@ function intervalControl() {
     render: renderIconHoz,
   });
 
-  fabric.Object.prototype.controls.mt = new fabric.Control({
+  fabric.FabricObject.prototype.controls.mt = new fabric.Control({
     x: 0,
     y: -0.5,
     offsetY: -1,
@@ -115,33 +118,36 @@ function peakControl() {
     left: number,
     top: number,
     styleOverride: any,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ) {
     drawImg(ctx, left, top, img, 25, 25, fabricObject.angle);
   }
+  if (!fabric.FabricObject.prototype.controls) {
+    fabric.FabricObject.prototype.controls = {};
+  }
   // 四角图标
-  fabric.Object.prototype.controls.tl = new fabric.Control({
+  fabric.FabricObject.prototype.controls.tl = new fabric.Control({
     x: -0.5,
     y: -0.5,
     cursorStyleHandler: fabric.controlsUtils.scaleCursorStyleHandler,
     actionHandler: fabric.controlsUtils.scalingEqually,
     render: renderIconEdge,
   });
-  fabric.Object.prototype.controls.bl = new fabric.Control({
+  fabric.FabricObject.prototype.controls.bl = new fabric.Control({
     x: -0.5,
     y: 0.5,
     cursorStyleHandler: fabric.controlsUtils.scaleCursorStyleHandler,
     actionHandler: fabric.controlsUtils.scalingEqually,
     render: renderIconEdge,
   });
-  fabric.Object.prototype.controls.tr = new fabric.Control({
+  fabric.FabricObject.prototype.controls.tr = new fabric.Control({
     x: 0.5,
     y: -0.5,
     cursorStyleHandler: fabric.controlsUtils.scaleCursorStyleHandler,
     actionHandler: fabric.controlsUtils.scalingEqually,
     render: renderIconEdge,
   });
-  fabric.Object.prototype.controls.br = new fabric.Control({
+  fabric.FabricObject.prototype.controls.br = new fabric.Control({
     x: 0.5,
     y: 0.5,
     cursorStyleHandler: fabric.controlsUtils.scaleCursorStyleHandler,
@@ -162,7 +168,7 @@ function peakControl() {
     left: number,
     top: number,
     styleOverride: any,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ) {
     drawImg(ctx, left, top, delImg, 24, 24, fabricObject.angle);
   }
@@ -180,7 +186,7 @@ function peakControl() {
   }
 
   // 删除图标
-  fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+  fabric.FabricObject.prototype.controls.deleteControl = new fabric.Control({
     x: 0.5,
     y: -0.5,
     offsetY: -16,
@@ -201,12 +207,12 @@ function rotationControl() {
     left: number,
     top: number,
     styleOverride: any,
-    fabricObject: fabric.Object
+    fabricObject: fabric.FabricObject
   ) {
     drawImg(ctx, left, top, img, 40, 40, fabricObject.angle);
   }
   // 旋转图标
-  fabric.Object.prototype.controls.mtr = new fabric.Control({
+  fabric.FabricObject.prototype.controls.mtr = new fabric.Control({
     x: 0,
     y: 0.5,
     cursorStyleHandler: fabric.controlsUtils.rotationStyleHandler,
@@ -234,7 +240,7 @@ class ControlsPlugin implements IPluginTempl {
     rotationControl();
 
     // 选中样式
-    fabric.Object.prototype.set({
+    fabric.FabricObject.prototype.set({
       transparentCorners: false,
       borderColor: '#51B9F9',
       cornerColor: '#FFF',
@@ -244,7 +250,7 @@ class ControlsPlugin implements IPluginTempl {
       borderOpacityWhenMoving: 1,
     });
     // textbox保持一致
-    // fabric.Textbox.prototype.controls = fabric.Object.prototype.controls;
+    // fabric.Textbox.prototype.controls = fabric.FabricObject.prototype.controls;
   }
 
   destroy() {

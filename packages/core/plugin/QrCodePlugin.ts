@@ -6,7 +6,7 @@
  * @Description: 二维码生成工具
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import QRCodeStyling from 'qr-code-styling';
 import { blobToBase64 } from '../utils/utils';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';

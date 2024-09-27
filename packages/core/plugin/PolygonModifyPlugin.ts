@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { drawImg } from '../utils/utils';
 import edgeImg from '../assets/edgecontrol.svg?url';
 import { noop } from 'lodash-es';
@@ -66,7 +66,7 @@ const anchorWrapper = function (anchorIndex: number, fn: fabric.Control['actionH
     return actionPerformed;
   };
 };
-const getObjectSizeWithStroke = function (object: fabric.Object) {
+const getObjectSizeWithStroke = function (object: fabric.FabricObject) {
   const stroke = new fabric.Point(
     object.strokeUniform ? 1 / object.scaleX! : 1,
     object.strokeUniform ? 1 / object.scaleY! : 1
@@ -95,7 +95,7 @@ function renderIconEdge(
   left: number,
   top: number,
   styleOverride: any,
-  fabricObject: fabric.Object,
+  fabricObject: fabric.FabricObject,
   img: HTMLImageElement
 ) {
   drawImg(ctx, left, top, img, 25, 25, fabric.util.degreesToRadians(fabricObject.angle || 0));
@@ -119,7 +119,7 @@ class PolygonModifyPlugin implements IPluginTempl {
     console.info('[PolygonModifyPlugin]: init');
   }
   _onDeselected: () => any = noop;
-  _ensureEvent(poly: fabric.Object) {
+  _ensureEvent(poly: fabric.FabricObject) {
     poly.off('deselected', this._onDeselected);
   }
   toggleEdit() {
@@ -163,7 +163,7 @@ class PolygonModifyPlugin implements IPluginTempl {
     if (poly && poly.type === 'polygon') {
       poly.cornerColor = 'blue';
       poly.cornerStyle = 'rect';
-      poly.controls = fabric.Object.prototype.controls;
+      poly.controls = fabric.FabricObject.prototype.controls;
       poly.hasBorders = !this.isEdit;
       poly.set({
         objectCaching: true,

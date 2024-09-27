@@ -6,7 +6,7 @@
  * @Description: 复制插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { v4 as uuid } from 'uuid';
 import { getImgStr } from '../utils/utils';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
@@ -22,20 +22,20 @@ class CopyPlugin implements IPluginTempl {
   static pluginName = 'CopyPlugin';
   static apis = ['clone'];
   hotkeys: string[] = ['ctrl+v', 'ctrl+c'];
-  private cache: null | fabric.ActiveSelection | fabric.Object = null;
+  private cache: null | fabric.ActiveSelection | fabric.FabricObject = null;
   constructor(public canvas: fabric.Canvas, public editor: IEditor) {
     this.initPaste();
   }
 
   // 多选对象复制
-  _copyActiveSelection(activeObject: fabric.Object) {
+  _copyActiveSelection(activeObject: fabric.FabricObject) {
     // 间距设置
     const grid = 10;
     const canvas = this.canvas;
     const keys = this.editor.getExtensionKey();
-    activeObject?.clone((cloned: fabric.Object) => {
+    activeObject?.clone().then((cloned: fabric.FabricObject) => {
       // 再次进行克隆，处理选择多个对象的情况
-      cloned.clone((clonedObj: fabric.ActiveSelection) => {
+      cloned.clone().then((clonedObj: fabric.ActiveSelection) => {
         canvas.discardActiveObject();
         if (clonedObj.left === undefined || clonedObj.top === undefined) return;
         // 将克隆的画布重新赋值
@@ -47,7 +47,7 @@ class CopyPlugin implements IPluginTempl {
           evented: true,
           id: uuid(),
         });
-        clonedObj.forEachObject((obj: fabric.Object) => {
+        clonedObj.forEachObject((obj: fabric.FabricObject) => {
           obj.id = uuid();
           canvas.add(obj);
         });
@@ -60,12 +60,12 @@ class CopyPlugin implements IPluginTempl {
   }
 
   // 单个对象复制
-  _copyObject(activeObject: fabric.Object) {
+  _copyObject(activeObject: fabric.FabricObject) {
     // 间距设置
     const grid = 10;
     const canvas = this.canvas;
     const keys = this.editor.getExtensionKey();
-    activeObject?.clone((cloned: fabric.Object) => {
+    activeObject?.clone().then((cloned: fabric.FabricObject) => {
       if (cloned.left === undefined || cloned.top === undefined) return;
       canvas.discardActiveObject();
       // 设置位置信息
@@ -82,7 +82,7 @@ class CopyPlugin implements IPluginTempl {
   }
 
   // 复制元素
-  clone(paramsActiveObeject?: fabric.ActiveSelection | fabric.Object) {
+  clone(paramsActiveObeject?: fabric.ActiveSelection | fabric.FabricObject) {
     const activeObject = paramsActiveObeject || this.canvas.getActiveObject();
     if (!activeObject) return;
     if (activeObject?.type === 'activeSelection') {

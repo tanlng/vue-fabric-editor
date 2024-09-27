@@ -7,9 +7,10 @@
  */
 import { v4 as uuid } from 'uuid';
 import { selectFiles, clipboardText, downFile } from './utils/utils';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 import { SelectEvent, SelectMode } from './eventType';
+import FabricGuideLine from './ruler/guideline';
 
 type IPlugin = Pick<
   ServersPlugin,
@@ -82,7 +83,7 @@ class ServersPlugin implements IPluginTempl {
 
     const actives = this.canvas
       .getActiveObjects()
-      .filter((item) => !(item instanceof fabric.GuideLine)); // 过滤掉辅助线
+      .filter((item) => !(item instanceof FabricGuideLine)); // 过滤掉辅助线
     if (actives && actives.length === 1) {
       this.selectedMode = SelectMode.ONE;
       this.editor.emit(SelectEvent.ONE, actives);
@@ -204,7 +205,7 @@ class ServersPlugin implements IPluginTempl {
    * @param {Event} event
    * @param {Object} item
    */
-  dragAddItem(item: fabric.Object, event?: DragEvent) {
+  dragAddItem(item: fabric.FabricObject, event?: DragEvent) {
     if (event) {
       const { left, top } = this.canvas.getSelectionElement().getBoundingClientRect();
       if (event.x < left || event.y < top || item.width === undefined) return;
@@ -302,7 +303,7 @@ class ServersPlugin implements IPluginTempl {
     }
 
     console.log('_getSaveSvgOption', fontEntry);
-    const { left, top, width, height } = workspace as fabric.Object;
+    const { left, top, width, height } = workspace as fabric.FabricObject;
     return {
       fontOption: fontEntry,
       svgOption: {
@@ -321,9 +322,9 @@ class ServersPlugin implements IPluginTempl {
   _getSaveOption() {
     const workspace = this.canvas
       .getObjects()
-      .find((item: fabric.Object) => item.id === 'workspace');
+      .find((item: fabric.FabricObject) => item.id === 'workspace');
     console.log('getObjects', this.canvas.getObjects());
-    const { left, top, width, height } = workspace as fabric.Object;
+    const { left, top, width, height } = workspace as fabric.FabricObject;
     const option = {
       name: 'New Image',
       format: 'png',

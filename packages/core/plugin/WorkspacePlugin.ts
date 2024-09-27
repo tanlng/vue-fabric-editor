@@ -6,7 +6,7 @@
  * @Description: 画布区域插件
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { throttle } from 'lodash-es';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
@@ -179,7 +179,7 @@ class WorkspacePlugin implements IPluginTempl {
     this.setCenterFromObject(this.workspace);
 
     // 超出画布不展示
-    this.workspace.clone((cloned: fabric.Rect) => {
+    this.workspace.clone().then((cloned: fabric.Rect) => {
       this.canvas.clipPath = cloned;
       this.canvas.requestRenderAll();
     });

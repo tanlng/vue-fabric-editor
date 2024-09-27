@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-06-08 18:31:24
  * @Description: PSD插件
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { selectFiles } from '../utils/utils';
 import psdToJson from '../utils/psd';
 import Psd from '@webtoon/psd';

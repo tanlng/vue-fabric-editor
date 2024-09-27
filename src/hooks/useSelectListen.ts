@@ -28,7 +28,7 @@ export default function useSelectListen(canvasEditor: Editor) {
     mSelectActive: [],
   });
 
-  const selectOne = (e: [fabric.Object]) => {
+  const selectOne = (e: [fabric.FabricObject]) => {
     state.mSelectMode = SelectMode.ONE;
     state.mSelectActive = e;
     if (e[0] && get(e[0], 'clip')) {
@@ -45,7 +45,7 @@ export default function useSelectListen(canvasEditor: Editor) {
     }
   };
 
-  const selectMulti = (e: fabric.Object[]) => {
+  const selectMulti = (e: fabric.FabricObject[]) => {
     state.mSelectMode = SelectMode.MULTI;
     state.mSelectId = '';
     state.mSelectIds = e.map((item) => item.id);

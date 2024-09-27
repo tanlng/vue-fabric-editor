@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-07-22 10:11:29
  * @Description: 锁定文件
  */
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { SelectMode } from '../eventType';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
@@ -40,7 +40,7 @@ export default class LockPlugin implements IPluginTempl {
   }
 
   lock() {
-    const activeObject = this.canvas.getActiveObject() as fabric.Object;
+    const activeObject = this.canvas.getActiveObject() as fabric.FabricObject;
     if (activeObject) {
       activeObject.hasControls = false;
       activeObject.selectable = false;
@@ -54,7 +54,7 @@ export default class LockPlugin implements IPluginTempl {
   }
 
   unLock() {
-    const activeObject = this.canvas.getActiveObject() as fabric.Object;
+    const activeObject = this.canvas.getActiveObject() as fabric.FabricObject;
     if (activeObject) {
       activeObject.hasControls = true;
       activeObject.selectable = true;

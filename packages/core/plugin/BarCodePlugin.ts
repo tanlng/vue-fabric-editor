@@ -6,7 +6,7 @@
  * @Description: 条形码生成工具
  */
 
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import JsBarcode from 'jsbarcode';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 

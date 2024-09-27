@@ -62,7 +62,7 @@
 <script name="ImgStroke" lang="ts" setup>
 import useSelect from '@/hooks/select';
 import { Slider } from 'view-ui-plus';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { Utils } from '@kuaitu/core';
 
 interface IExtendImage {

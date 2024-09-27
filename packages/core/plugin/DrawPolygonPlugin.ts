@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import { v4 as uuid } from 'uuid';
 import { shiftAngle } from '../utils/utils';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';

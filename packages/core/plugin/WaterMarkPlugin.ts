@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-05-23 17:56:45
  */
 import { cloneDeep } from 'lodash-es';
-import { fabric } from 'fabric';
+import * as fabric from 'fabric';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
 type IPlugin = Pick<WaterMarkPlugin, 'drawWaterMark' | 'clearWaterMMatk' | 'updateDrawStatus'>;
