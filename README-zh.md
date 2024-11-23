@@ -126,6 +126,8 @@ pnpm dev
 
 如果你对这件事情感兴趣，真诚的邀请你加入，我们一起成长，你只要会简单的 Git 和 Javascript 语法就可以。
 
+[【提交代码送赢雷蛇游戏鼠标】](https://github.com/ikuaitu/vue-fabric-editor/issues/526)
+
 ### 相关资料
 
 这是我发表在掘金社区关于编辑器的技术笔记，会有更多的细节：
@@ -147,6 +149,13 @@ pnpm dev
 
 - [刘明野](https://github.com/liumingye)标尺功能作者。
 - [palxiao](https://github.com/palxiao/poster-design/tree/main/packages/color-picker)设计编辑器的渐变组件。
+
+## 友情赞助
+
+<a href="https://github.com/wangyuan389/mall-cook" target="_blank">
+    <img src="https://www.sunmao-design.top/sunmao/admin/assets/logo.896aa176.png" width="50px" alt="开源图片编辑器" />    
+</a>
+
 
 ## 管理员
 
@@ -469,6 +478,9 @@ pnpm dev
 	<tbody>
 </table>
 <!-- readme: collaborators,contributors -end -->
+
+
+
 
 ## License
 
