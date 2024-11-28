@@ -1,3 +1,10 @@
+// 判断是否有存在id如果存在则不创建，直接接管
+console.log('创建根节点------------------');
+const body = document.body;
+const appNode = document.createElement('div');
+appNode.setAttribute('id', 'vue-fabric-editor_chrome-plugin');
+body.appendChild(appNode);
+
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -20,6 +27,6 @@ async function bootstrap() {
   app.use(VueLazyLoad, {});
   app.use(ViewUiPlus);
   await router.isReady();
-  app.mount('#app');
+  app.mount('#vue-fabric-editor_chrome-plugin');
 }
 bootstrap();

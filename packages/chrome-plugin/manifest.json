@@ -15,7 +15,7 @@
   },
   "content_scripts": [
     {
-      "js": ["content/content.js"],
+      "js": ["content/vue-fabric-editor/js/index.js"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],

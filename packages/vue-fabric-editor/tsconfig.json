@@ -18,11 +18,22 @@
       "dom"
     ],
     "skipLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "files": [],
   "include": [
-    "packages/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "typings/**/*.ts",
+    "typings/**/*.d.ts",
+    "src/hooks/useMaterial.js",
   ],
   "references": [
     {

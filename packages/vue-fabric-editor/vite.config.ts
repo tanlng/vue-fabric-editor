@@ -61,7 +61,7 @@ const config = ({ mode }) => {
     ],
     build: {
       target: 'es2015',
-      outDir: resolve(__dirname, 'dist'),
+      outDir: resolve(__dirname, '../chrome-plugin/content/vue-fabric-editor'),
       assetsDir: 'assets',
       assetsInlineLimit: 8192,
       // sourcemap: !isProd,
@@ -70,10 +70,14 @@ const config = ({ mode }) => {
         input: resolve(__dirname, 'index.html'),
         output: {
           chunkFileNames: 'js/[name].[hash].js',
-          entryFileNames: 'js/[name].[hash].js',
+          entryFileNames: 'js/[name].js',
         },
       },
     },
+    // esbuild: {
+    //   loader: 'js',
+    //   target: 'es2015',
+    // },
     envPrefix,
     resolve: {
       alias: [
