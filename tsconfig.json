@@ -28,13 +28,12 @@
   "files": [],
   "include": [
     "packages/**/*.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "packages/src/**/*.d.ts",
+    "packages/src/**/*.tsx",
+    "packages//**/*.vue",
     "typings/**/*.ts",
     "typings/**/*.d.ts",
-    "src/hooks/useMaterial.js",
+    "packages/src/hooks/useMaterial.js",
   ],
   "references": [
     {

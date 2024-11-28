@@ -14,5 +14,14 @@
     "i18n-ally.keystyle": "nested",
     "[vue]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    } // 需要Prettier的配置文件
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "hide-files.files": [] // 需要Prettier的配置文件
 }
