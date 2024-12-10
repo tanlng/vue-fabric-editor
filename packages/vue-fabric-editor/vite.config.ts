@@ -16,7 +16,6 @@ import autoImports from 'unplugin-auto-import/vite';
 import { resolve } from 'path';
 import autoprefixer from 'autoprefixer';
 import svgLoader from 'vite-svg-loader';
-import viteCompression from 'vite-plugin-compression';
 
 const config = ({ mode }) => {
   const isProd = mode === 'production';
@@ -24,6 +23,9 @@ const config = ({ mode }) => {
   const { APP_TITLE = '', APP_BASE_PATH } = loadEnv(mode, process.cwd(), envPrefix);
   return {
     base: isProd ? APP_BASE_PATH : '/',
+    define: {
+      'process.env': {},
+    },
     plugins: [
       vue(),
       autoImports({
@@ -50,14 +52,6 @@ const config = ({ mode }) => {
         },
       }),
       svgLoader(),
-      viteCompression({
-        verbose: true,
-        disable: false,
-        deleteOriginFile: false,
-        threshold: 5120,
-        algorithm: 'gzip',
-        ext: '.gz',
-      }),
     ],
     build: {
       target: 'es2015',
@@ -66,13 +60,15 @@ const config = ({ mode }) => {
       assetsInlineLimit: 8192,
       // sourcemap: !isProd,
       emptyOutDir: true,
-      rollupOptions: {
-        input: resolve(__dirname, 'index.html'),
-        output: {
-          chunkFileNames: 'js/[name].[hash].js',
-          entryFileNames: 'js/[name].js',
-        },
+      lib: {
+        format: 'iife', // 或者 'umd'
+        entry: resolve(__dirname, 'src/main.ts'),
+        name: 'imageEditor',
+        fileName: (format) => `imageEditor.${format}.js`,
       },
+      manifest: true,
+      reportCompressedSize: false,
+      // minify: false, // 禁用代码压缩
     },
     // esbuild: {
     //   loader: 'js',

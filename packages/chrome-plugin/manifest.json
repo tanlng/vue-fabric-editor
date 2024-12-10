@@ -15,7 +15,7 @@
   },
   "content_scripts": [
     {
-      "js": ["content/vue-fabric-editor/js/index.js"],
+      "js": ["content/vue-fabric-editor/imageEditor.umd.js"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],

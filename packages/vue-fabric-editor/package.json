@@ -8,7 +8,6 @@
     "serve": "pnpm dev",
     "dev": "vite serve",
     "dev:staging": "vite serve --mode=staging",
-    "dev:prod": "vite serve --mode=production",
     "build": "vite build",
     "build:sdk": "pnpm -C packages/core build",
     "build:staging": "vite build --mode=staging",
@@ -32,7 +31,6 @@
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.2.25",
     "vue-cropper": "^1.1.4",
-    "vue-i18n": "9.0.0",
     "vue-masonry": "^0.16.0",
     "vue-router": "^4.0.16",
     "vue3-lazyload": "^0.3.6"
