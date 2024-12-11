@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
       }
       return true;
     },
-    component: () => import('@/views/home/index.vue'),
+    component: () => import('@/views/DragUploadLayer/index.vue'),
   },
   {
     path: '/template',

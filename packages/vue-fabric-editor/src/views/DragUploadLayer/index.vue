@@ -1,11 +1,11 @@
 <template>
-  <div class="sc-content-drop-area-container" v-show="isShow">
+  <div class="imageeditor-content-drop-area-container" v-show="isShow">
     <!-- 
        @dragend="handleDragEndChrome" @click.native="handleDragEndChrome"
      -->
     <div
-      id="sc-content-drop-area"
-      class="sc-content-drop-area"
+      id="imageeditor-content-drop-area"
+      class="imageeditor-content-drop-area"
       :class="{
         dragover,
       }"
@@ -15,20 +15,27 @@
       @dragover.prevent
     >
       <div @drop="handleDropLeft" @click="handleDropLeft">
-        <div class="sc-content-drop-area-content">
-          <div class="icon"><div class="fake-svg"></div></div>
+        <div class="imageeditor-content-drop-area-content">
+          <div class="icon">
+            <Icon type="ios-image" />
+          </div>
           <div class="title">拖放图片到这里进行编辑</div>
           <div class="description">拖放图片到这里进行编辑</div>
         </div>
       </div>
     </div>
   </div>
+  <Modal v-model="modal" fullscreen title="Fullscreen Modal" footer-hide="true">
+    <Home></Home>
+  </Modal>
 </template>
 
-<script>
-import { mapState } from 'vuex';
-
+<script setup lang="ts">
+const modal = ref(true);
+</script>
+<script lang="ts">
 import { getDragConfig, getElementBackgroundImage, getHasSrcTarget } from './drag-config';
+import Home from '@/views/Home/index.vue';
 
 const dragMode = 1;
 const DIALOG_KEY = 'DragUploadLayer';
@@ -43,7 +50,6 @@ export default {
       left: 100,
       top: 100,
       isShow: false,
-      isLogin: false,
       dragover: false,
 
       pageX: 0,
@@ -58,9 +64,6 @@ export default {
     };
   },
   computed: {
-    ...mapState('orange', {
-      dialogInfo: (state) => state.dialog[DIALOG_KEY],
-    }),
     styleVm() {
       return {
         left: Math.max(0, this.left) + 'px',
@@ -190,12 +193,6 @@ export default {
       this.target = null;
     },
     async handleDropLeft() {
-      console.log('2、handleDropLeft');
-      //如果未登录，提示登录
-      if (!this.isLogin) {
-        this.$openDialog('LoginPluginDlg');
-        return;
-      }
       const src = getElementBackgroundImage(this.target);
       if (!src) {
         console.error('无法识别的拖拽元素');
@@ -238,8 +235,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.sc-content-drop-area-container {
+<style lang="less" scoped>
+.imageeditor-content-drop-area-container {
   position: fixed;
   top: 0;
   right: 0;
@@ -249,7 +246,7 @@ export default {
   margin: 0;
   z-index: 9999999;
 }
-.sc-content-drop-area {
+.imageeditor-content-drop-area {
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei',
     '微软雅黑', 'Helvetica Neue', Helvetica, Arial, Arial, sans-serif;
   font-weight: 400;
@@ -267,7 +264,6 @@ export default {
   /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) 0 8px 24px rgba(65, 69, 100, .15);*/
   box-sizing: border-box;
   opacity: 0.95;
-  background: #303034;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 
@@ -275,12 +271,12 @@ export default {
   padding: 10px 0;
 }
 
-.sc-content-drop-area.sc-show {
+.imageeditor-content-drop-area.imageeditor-show {
   transition: transform 0.1s ease-out;
   transform: translateY(0px);
 }
 
-.sc-content-drop-area .sc-content-drop-area-content {
+.imageeditor-content-drop-area .imageeditor-content-drop-area-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -291,7 +287,7 @@ export default {
   /*border: 1px solid red;*/
 }
 
-.sc-content-drop-area .sc-content-drop-area-content .icon {
+.imageeditor-content-drop-area .imageeditor-content-drop-area-content .icon {
   height: 44px;
   width: 44px;
   line-height: 44px;
@@ -303,23 +299,12 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
-.sc-content-drop-area .sc-content-drop-area-content .icon .fake-svg {
-  -webkit-mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxM3B4IiBoZWlnaHQ9IjE1cHgiIHZpZXdCb3g9IjAgMCAxMyAxNSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4gICAgICAgIDx0aXRsZT5pY19kb3dubG9hZF9ub3JtYWw8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0i5paw54mI5pys5ouW5ou95qaC5b+1LS0t5ouW5ou96Kem5Y+RIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtODE0LjAwMDAwMCwgLTM2Mi4wMDAwMDApIiBmaWxsPSIjMzMzMzMzIj4gICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzA5LjAwMDAwMCwgMjg5LjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtNyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUuMDAwMDAwLCA2MS4wMDAwMDApIj4gICAgICAgICAgICAgICAgICAgIDxnIGlkPSJHcm91cC02IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2Ny40NTAwMDAsIDAuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGcgaWQ9ImFycm93LWRvd24iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLjM1MDAwMCwgMTIuMzUwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJpY19kb3dubG9hZF9ub3JtYWwiIHBvaW50cz0iNi42NSAxMy43NzUgMC40NzUgNy42IDMuOCA3LjYgMy44IDAgOS41IDAgOS41IDcuNiAxMi44MjUgNy42Ij48L3BvbHlnb24+ICAgICAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICA8L2c+ICAgICAgICAgICAgPC9nPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+)
-    no-repeat center center;
-  /*background: #333;*/
-  height: 44px;
-  width: 44px;
-  background: #fff;
-  transition: all 0.3s ease-in-out;
-  animation: icon-jump 1.5s ease 0s infinite normal;
-}
-
-.sc-content-drop-area .sc-content-drop-area-content .icon img {
+.imageeditor-content-drop-area .imageeditor-content-drop-area-content .icon img {
   display: inline-block;
   vertical-align: middle;
 }
 
-.sc-content-drop-area .sc-content-drop-area-content .title {
+.imageeditor-content-drop-area .imageeditor-content-drop-area-content .title {
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei',
     '微软雅黑', 'Helvetica Neue', Helvetica, Arial, Arial, sans-serif;
   font-size: 16px !important;
@@ -331,7 +316,7 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
-.sc-content-drop-area .sc-content-drop-area-content .description {
+.imageeditor-content-drop-area .imageeditor-content-drop-area-content .description {
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei',
     '微软雅黑', 'Helvetica Neue', Helvetica, Arial, Arial, sans-serif;
   font-size: 12px !important;
@@ -345,7 +330,7 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
-.sc-content-drop-area.dragover .sc-content-drop-area-content .icon {
+.imageeditor-content-drop-area.dragover .imageeditor-content-drop-area-content .icon {
   background: rgba(255, 255, 255, 0.3);
   /*opacity: 0.9;*/
   /*transform: translateY(0) scale3d(1.05, 1.05, 1);*/

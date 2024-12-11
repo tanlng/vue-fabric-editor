@@ -5,9 +5,7 @@
   "description": "a template project for vue3, ViewUIPlus, TypeScript and Vite.",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "serve": "pnpm dev",
     "dev": "vite serve",
-    "dev:staging": "vite serve --mode=staging",
     "build": "vite build",
     "build:sdk": "pnpm -C packages/core build",
     "build:staging": "vite build --mode=staging",
