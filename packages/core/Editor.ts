@@ -2,7 +2,6 @@ import EventEmitter from 'events';
 import hotkeys from 'hotkeys-js';
 import ContextMenu from './ContextMenu.js';
 import ServersPlugin from './ServersPlugin';
-import { AsyncSeriesHook } from 'tapable';
 import type {
   IPluginMenu,
   IPluginClass,
@@ -12,6 +11,25 @@ import type {
 } from '@kuaitu/core';
 
 import Utils from './utils/utils';
+
+class EditorAsyncSeriesHook {
+  events: ((params) => Promise<any>)[] = [];
+  tapPromise(name: any, callback: (params) => Promise<any>) {
+    this.events.push(callback);
+  }
+  async callAsync(args, callback) {
+    for (let i = 0; i < this.events.length; i++) {
+      await this.events[i](args);
+    }
+    callback();
+  }
+}
+type IPlugin = Pick<Editor, 'hooksEntity'>;
+
+declare module '@kuaitu/core' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface IEditor extends IPlugin {}
+}
 
 class Editor extends EventEmitter {
   private canvas: fabric.Canvas | null = null;
@@ -33,7 +51,7 @@ class Editor extends EventEmitter {
     'hookTransform',
   ];
   public hooksEntity: {
-    [propName: string]: AsyncSeriesHook<any, any>;
+    [propName: string]: EditorAsyncSeriesHook;
   } = {};
 
   init(canvas: fabric.Canvas) {
@@ -174,7 +192,7 @@ class Editor extends EventEmitter {
   // 生命周期事件
   _initActionHooks() {
     this.hooks.forEach((hookName) => {
-      this.hooksEntity[hookName] = new AsyncSeriesHook(['data']);
+      this.hooksEntity[hookName] = new EditorAsyncSeriesHook();
     });
   }
 

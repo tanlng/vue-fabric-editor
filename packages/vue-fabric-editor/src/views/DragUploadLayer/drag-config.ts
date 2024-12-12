@@ -347,7 +347,7 @@ export function getClickImage(event) {
   }
 
   if (!target) {
-    mini = 9999999;
+    let mini = 9999999;
     const $bgs = [...document.querySelectorAll('div')].filter(function (el) {
       return getComputedStyle(el).getPropertyValue('background-image') != 'none';
     });

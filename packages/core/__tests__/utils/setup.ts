@@ -4,8 +4,8 @@ import { fabric } from 'fabric';
 export function createEditor() {
   const editor = new Editor();
   const canvasElement = document.createElement('canvas');
-  canvasElement.id = 'canvas';
-  const canvas = new fabric.Canvas('canvas', {
+  canvasElement.id = 'imageeditorCanvas';
+  const canvas = new fabric.Canvas('imageeditorCanvas', {
     fireRightClick: true,
     stopContextMenu: true,
     controlsAboveOverlay: true,
@@ -23,8 +23,8 @@ export function createEditor() {
 export function initPlugin(plugin: any) {
   const editor = new Editor();
   const canvasElement = document.createElement('canvas');
-  canvasElement.id = 'canvas';
-  const canvas = new fabric.Canvas('canvas', {});
+  canvasElement.id = 'imageeditorCanvas';
+  const canvas = new fabric.Canvas('imageeditorCanvas', {});
   const pluginInstance = new plugin(canvas, editor);
 
   return {

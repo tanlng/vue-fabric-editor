@@ -17,7 +17,7 @@
         <div id="workspace">
           <div class="canvas-box">
             <div class="inside-shadow"></div>
-            <canvas id="canvas" :class="state.ruler ? 'design-stage-grid' : ''"></canvas>
+            <canvas id="imageeditorCanvas" :class="state.ruler ? 'design-stage-grid' : ''"></canvas>
             <dragMode v-if="state.show"></dragMode>
             <zoom></zoom>
           </div>
@@ -80,15 +80,25 @@ const APIHOST = import.meta.env.APP_APIHOST;
 // 创建编辑器
 const canvasEditor = new Editor() as IEditor;
 
+const props = defineProps<{
+  url: string;
+}>();
+
+console.log('初始化', props);
+
 const state = reactive({
   show: false,
   select: null,
   ruler: true,
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await new Promise((rs) => {
+    setTimeout(rs, 5000);
+  });
+  console.log('初始化完成');
   // 初始化fabric
-  const canvas = new fabric.Canvas('canvas', {
+  const canvas = new fabric.Canvas('imageeditorCanvas', {
     fireRightClick: true, // 启用右键，button的数字为3
     stopContextMenu: true, // 禁止默认右键菜单
     controlsAboveOverlay: true, // 超出clipPath后仍然展示控制条
@@ -142,6 +152,12 @@ onMounted(() => {
   if (state.ruler) {
     canvasEditor.rulerEnable();
   }
+  if (props.url) {
+    const imgItem = await canvasEditor.createImgByUrl(props.url, { modifyCanvas: true });
+    canvasEditor.addBaseType(imgItem, {
+      modifyCanvas: true,
+    });
+  }
 });
 
 onUnmounted(() => canvasEditor.destory());
@@ -174,7 +190,7 @@ provide('canvasEditor', canvasEditor);
 
 .home,
 .ivu-layout {
-  height: 100vh;
+  height: 100%;
 }
 
 .icon {
@@ -195,7 +211,7 @@ provide('canvasEditor', canvasEditor);
   pointer-events: none;
 }
 
-#canvas {
+#imageeditorCanvas {
   width: 300px;
   height: 300px;
   margin: 0 auto;
