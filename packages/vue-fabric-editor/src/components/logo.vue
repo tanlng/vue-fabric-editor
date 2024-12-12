@@ -8,9 +8,9 @@
 
 <template>
   <div class="logo">
-    <a :href="webInfo.url" target="_blank">
+    <!-- <a :href="webInfo.url" target="_blank">
       <img :src="webInfo.img" alt="webInfo.name" />
-    </a>
+    </a> -->
   </div>
 </template>
 
