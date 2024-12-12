@@ -25,7 +25,7 @@
       </div>
     </Card>
   </div>
-  <Modal v-model="modal" fullscreen footer-hide="true">
+  <Modal v-if="modal" v-model="modal" fullscreen footer-hide="true">
     <Home :url="data.url"></Home>
   </Modal>
 </template>
