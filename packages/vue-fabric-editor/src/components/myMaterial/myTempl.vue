@@ -42,7 +42,7 @@
     </Breadcrumb>
 
     <!-- 列表 -->
-    <div style="height: calc(100vh - 160px)" id="myFileTemplBox">
+    <div style="height: calc(100% - 160px)" id="myFileTemplBox">
       <Scroll
         key="myFileTemplBox"
         v-if="showScroll"

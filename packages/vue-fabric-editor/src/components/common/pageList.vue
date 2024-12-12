@@ -8,7 +8,7 @@
 
 <template>
   <!-- 列表 -->
-  <div class="page-list-box" style="height: calc(100vh - 100px)" :id="props.DOMId">
+  <div class="page-list-box" style="height: calc(100% - 100px)" :id="props.DOMId">
     <Scroll
       :key="props.DOMId"
       v-if="showScroll"

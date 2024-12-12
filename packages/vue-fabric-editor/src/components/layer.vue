@@ -190,7 +190,7 @@ onMounted(() => {
   width: 100%;
 }
 .layer-box {
-  height: calc(100vh - 170px);
+  height: calc(100% - 170px);
   overflow-y: auto;
   margin-bottom: 5px;
   .ellipsis {
