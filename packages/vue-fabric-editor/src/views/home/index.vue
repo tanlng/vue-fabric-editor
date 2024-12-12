@@ -93,9 +93,6 @@ const state = reactive({
 });
 
 onMounted(async () => {
-  await new Promise((rs) => {
-    setTimeout(rs, 5000);
-  });
   console.log('初始化完成');
   // 初始化fabric
   const canvas = new fabric.Canvas('imageeditorCanvas', {
