@@ -1,5 +1,5 @@
 <template>
-  <Header>
+  <Header class="ivu-pr-16">
     <div class="left">
       <!-- <logo></logo>
       <Divider type="vertical" /> -->
@@ -21,7 +21,7 @@
       <history></history>
     </div>
 
-    <div class="right ivu-pr-32">
+    <div class="right ivu-pr-16">
       <a href="https://pro.kuaitu.cc/" target="_blank" alt="商业版">
         <img width="15" :src="proIcon" alt="vue-fbric-editor" />
       </a>

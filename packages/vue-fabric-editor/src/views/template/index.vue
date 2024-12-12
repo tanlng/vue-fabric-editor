@@ -11,9 +11,8 @@
       <!-- 头部区域 -->
       <Header :style="{ position: 'fixed', width: '100%', zIndex: 99 }">
         <div class="left">
-          <logo></logo>
-          <!-- 导入 -->
-          <Divider type="vertical" />
+          <!-- <logo></logo>
+          <Divider type="vertical" /> -->
           在线设计工具
         </div>
 
