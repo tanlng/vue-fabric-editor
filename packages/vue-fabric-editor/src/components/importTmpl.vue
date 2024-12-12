@@ -113,7 +113,6 @@ const beforeClearTip = (info) => {
 
 onMounted(() => {
   startPage();
-  getTemplInfo();
 });
 
 // 获取模板数据
