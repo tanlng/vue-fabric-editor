@@ -60,12 +60,12 @@ const leftBar = reactive([
     name: computed(() => t('layers')),
     icon: 'md-reorder',
   },
-  {
-    // 用户素材
-    key: 'myMaterial',
-    name: computed(() => t('mine')),
-    icon: 'ios-contact-outline',
-  },
+  // {
+  //   // 用户素材
+  //   key: 'myMaterial',
+  //   name: computed(() => t('mine')),
+  //   icon: 'ios-contact-outline',
+  // },
 ]);
 // 隐藏工具条
 const hideToolsBar = () => {
