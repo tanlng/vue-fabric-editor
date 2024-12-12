@@ -99,7 +99,7 @@ onMounted(() => {
     <div class="content" v-show="state.toolsBarShow">
       <div class="left-panel">
         <KeepAlive>
-          <component :is="leftBarComponent[menuActive]"></component>
+          <component style="height: 100%" :is="leftBarComponent[menuActive]"></component>
         </KeepAlive>
       </div>
     </div>
@@ -122,6 +122,9 @@ onMounted(() => {
 
   &.show-tools-bar {
     width: 380px;
+  }
+  .left-panel {
+    height: 100%;
   }
 }
 .ivu-menu-vertical .menu-item {
