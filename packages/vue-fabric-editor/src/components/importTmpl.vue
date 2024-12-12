@@ -30,7 +30,7 @@
       />
     </div>
     <!-- 列表 -->
-    <div style="height: calc(100% - 108px)" id="myTemplBox">
+    <div style="height: calc(100% - 52px)" id="myTemplBox">
       <Scroll
         key="mysscroll"
         v-if="showScroll"
