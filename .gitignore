@@ -29,3 +29,4 @@ package-lock.json
 typings/auto-imports.d.ts
 .eslintrc-auto-import.json
 packages/chrome-plugin/content/vue-fabric-editor
+packages/chrome-plugin/win/vue-fabric-editor

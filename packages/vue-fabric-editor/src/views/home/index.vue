@@ -74,17 +74,24 @@ import Editor, {
   AddBaseTypePlugin,
   MaskPlugin,
 } from '@kuaitu/core';
+import router from '@/router';
 
 const APIHOST = import.meta.env.APP_APIHOST;
 
 // 创建编辑器
 const canvasEditor = new Editor() as IEditor;
 
-const props = defineProps<{
-  url: string;
-}>();
-
-console.log('初始化', props);
+const props = withDefaults(
+  defineProps<{
+    url: string;
+  }>(),
+  {
+    url: '',
+  }
+);
+const urlComputed = computed(() => {
+  return props.url || router.currentRoute.value.query.url;
+});
 
 const state = reactive({
   show: false,
@@ -149,8 +156,8 @@ onMounted(async () => {
   if (state.ruler) {
     canvasEditor.rulerEnable();
   }
-  if (props.url) {
-    const imgItem = await canvasEditor.createImgByUrl(props.url, { modifyCanvas: true });
+  if (urlComputed.value) {
+    const imgItem = await canvasEditor.createImgByUrl(urlComputed.value, { modifyCanvas: true });
     canvasEditor.addBaseType(imgItem, {
       modifyCanvas: true,
     });

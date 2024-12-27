@@ -1,0 +1,25 @@
+{
+  "_main-6f4648f6.mjs": {
+    "dynamicImports": [
+      "src/views/DragUploadLayer/index.vue"
+    ],
+    "file": "main-6f4648f6.mjs"
+  },
+  "src/main.ts": {
+    "file": "imageEditor.umd.js",
+    "isEntry": true,
+    "src": "src/main.ts"
+  },
+  "src/views/DragUploadLayer/index.vue": {
+    "file": "index-316cacd1.mjs",
+    "imports": [
+      "_main-6f4648f6.mjs"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/views/DragUploadLayer/index.vue"
+  },
+  "style.css": {
+    "file": "style.css",
+    "src": "style.css"
+  }
+}

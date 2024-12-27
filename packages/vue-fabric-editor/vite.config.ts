@@ -55,19 +55,65 @@ const config = ({ mode }) => {
     ],
     build: {
       target: 'es2015',
-      outDir: resolve(__dirname, '../chrome-plugin/content/vue-fabric-editor'),
+      outDir: resolve(__dirname, '../chrome-plugin/win/vue-fabric-editor'),
       assetsDir: 'assets',
       assetsInlineLimit: 8192,
       // sourcemap: !isProd,
       emptyOutDir: true,
-      lib: {
-        format: 'iife', // 或者 'umd'
-        entry: resolve(__dirname, 'src/main.ts'),
-        name: 'imageEditor',
-        fileName: (format) => `imageEditor.${format}.js`,
-      },
+      // lib: {
+      //   format: 'iife', // 或者 'umd'
+      //   entry: resolve(__dirname, 'src/main.ts'),
+      //   name: 'imageEditor',
+      //   fileName: (format) => `imageEditor.${format}.js`,
+      // },
       manifest: true,
       reportCompressedSize: false,
+      rollupOptions: {
+        input: resolve(__dirname, 'index.html'),
+        output: {
+          chunkFileNames: 'js/[name].[hash].js',
+          entryFileNames: 'js/[name].[hash].js',
+          assetFileNames: '[ext]/[name]-[hash].[ext]',
+          // manualChunks: {
+          //   'vue-lib': ['vue', 'vue-i18n', 'vue-masonry', 'vue-router', '@vueuse/core'],
+          //   'kuaitu-lib': ['@kuaitu/core'],
+          //   'view-ui-plus-lib': ['view-ui-plus'],
+          //   fabric: ['fabric'],
+          // },
+          manualChunks(id: string) {
+            const relativeName = id.toString().split('src/views/')[1];
+            // 自定义拆分策略，例如将特定的第三方库拆分为单独的 chunk
+            if (id.includes('node_modules/')) {
+              ('use strict');
+              return id
+                .toString()
+                .split('node_modules/')[1]
+                .split('/')
+                .filter((x) => x !== '.pnpm')[0];
+            }
+            if (id.includes('src/styles/')) {
+              return 'styles';
+            }
+            if (id.includes('src/views/')) {
+              const name = relativeName.split('/')[0];
+              if (relativeName.endsWith('.less') || relativeName.endsWith('.css')) {
+                console.log(relativeName); // 打印所有被拆分的模块
+                return relativeName.replace('/', '_');
+              }
+              if (name === 'panels') {
+                if (relativeName.endsWith('.less') || relativeName.endsWith('.css')) {
+                  console.log(relativeName); // 打印所有被拆分的模块
+                  return relativeName.replace('/', '_');
+                }
+                console.log('panels', relativeName); // 打印所有被拆分的模块
+                return 'home';
+              }
+              console.log('view', relativeName); // 打印所有被拆分的模块
+              return name;
+            }
+          },
+        },
+      },
       // minify: false, // 禁用代码压缩
     },
     // esbuild: {

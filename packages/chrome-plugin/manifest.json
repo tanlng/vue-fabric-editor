@@ -4,7 +4,6 @@
   "description": "Image Editor",
   "version": "1.0",
   "action": {
-    "default_popup": "popup/popup.html",
     "default_icon": "images/icon-128.png"
   },
   "icons": {
@@ -20,12 +19,14 @@
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
+  "sandbox": {
+    "pages": ["win/vue-fabric-editor/index.html"]
+  },
   "background": {
-    "service_worker": "background/service-worker.js",
-    "type": "module"
+    "service_worker": "background/service-worker.js"
   },
   "permissions": [
-    "<all_urls>",
+    "\u003C<all_urls>",
     "activeTab",
     "scripting",
     "alarms",
